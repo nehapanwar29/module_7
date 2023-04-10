@@ -1,0 +1,19 @@
+---
+- name: To check the ntp details
+  hosts: ios
+  gather_facts: false
+  vars:
+    ntp_servers:
+      - host: "146.209.66.176"
+      - host: "146.209.66.175"
+
+  tasks:
+    - name: TASK 1 -  Display the NTP config output
+      ios_command:
+        commands:
+          - "show running-config full | include ntp server"
+      register: config_output
+
+    - name: TASK 2 - verify the output
+      ansible.builtin.debug:
+        var: config_output
